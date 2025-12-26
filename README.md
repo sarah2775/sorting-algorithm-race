@@ -1,3 +1,8 @@
+## 🌐 Live Demo
+👉 https://sorting-algorithm-race.streamlit.app/
+
+---
+
 # 🌌 Sorting Algorithm Race Visualizer
 
 An interactive, neon-themed web application that visually compares how
