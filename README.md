@@ -50,6 +50,5 @@ with an emphasis on clarity, usability, and design.
 ---
 
 ## 🔮 Future Improvements
-Deploy to Streamlit Cloud
-Add time/operation counters
-Allow algorithm toggling
+- Add time/operation counters
+- Allow algorithm toggling
