@@ -23,8 +23,7 @@ st.markdown(
 
 # ---------- USER INPUT ----------
 user_input = st.text_input(
-    "Enter numbers separated by spaces:",
-    "9 4 6 2 8 1 7 5"
+    "Enter numbers separated by spaces:"
 )
 
 run = st.button("🚀 Run Sorting Race")
@@ -47,6 +46,14 @@ if run:
         base_array = list(map(int, user_input.split()))
     except ValueError:
         st.error("Please enter only numbers separated by spaces.")
+        st.stop()
+
+    MAX_INPUT_SIZE = 20
+
+    if len(base_array) > MAX_INPUT_SIZE:
+        st.warning(
+            f"For smooth animation, please enter {MAX_INPUT_SIZE} numbers or fewer."
+        )
         st.stop()
 
     original_array = base_array.copy()
@@ -75,12 +82,17 @@ if run:
 
     plot_placeholder = st.empty()
 
-    speed = 0.15
+    STEPS_PER_FRAME = 5   
+    FRAME_DELAY = 0.08
+
 
     # ---------- ANIMATION LOOP ----------
-    while len(finished) < len(generators):
-        highlights = {}
+   import time
 
+    while len(finished) < len(generators):
+     highlights = {}
+
+     for _ in range(STEPS_PER_FRAME):
         for name in generators:
             if name in finished:
                 continue
@@ -91,23 +103,33 @@ if run:
                 finished.add(name)
                 finish_order.append(name)
 
-        for ax, (name, arr) in zip(axes, arrays.items()):
-            ax.clear()
-            ax.set_facecolor(BACKGROUND)
+     for ax, (name, arr) in zip(axes, arrays.items()):
+         if name in finished:
+             ax.clear()
+             ax.bar(range(len(arr)), arr, color=COLORS[name]["base"])
+             ax.set_title(f"{name} ✓", color=COLORS[name]["base"], fontsize=10)
+             ax.set_xticks([])
+             ax.set_yticks([])
+             continue
 
-            colors = [
-                COLORS[name]["highlight"] if highlights.get(name) and i in highlights[name]
-                else COLORS[name]["base"]
-                for i in range(len(arr))
-            ]
+        ax.clear()
+        ax.set_facecolor(BACKGROUND)
 
-            ax.bar(range(len(arr)), arr, color=colors)
-            ax.set_title(name, color=COLORS[name]["base"], fontsize=10)
-            ax.set_xticks([])
-            ax.set_yticks([])
+        colors = [
+            COLORS[name]["highlight"] if highlights.get(name) and i in highlights[name]
+            else COLORS[name]["base"]
+            for i in range(len(arr))
+        ]
 
-        with plot_placeholder:
-            st.pyplot(fig)
+        ax.bar(range(len(arr)), arr, color=colors)
+        ax.set_title(name, color=COLORS[name]["base"], fontsize=10)
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+     with plot_placeholder:
+        st.pyplot(fig)
+
+     time.sleep(FRAME_DELAY)
 
     # ---------- LEADERBOARD ----------
     st.markdown("### 🏁 Leaderboard")
