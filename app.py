@@ -103,7 +103,7 @@ if run:
                 finish_order.append(name)
 
      for ax, (name, arr) in zip(axes, arrays.items()):
-         if name in finished:
+        if name in finished:
              ax.clear()
              ax.bar(range(len(arr)), arr, color=COLORS[name]["base"])
              ax.set_title(f"{name} ✓", color=COLORS[name]["base"], fontsize=10)
