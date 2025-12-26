@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 import matplotlib.pyplot as plt
 
@@ -87,7 +88,6 @@ if run:
 
 
     # ---------- ANIMATION LOOP ----------
-   import time
     while len(finished) < len(generators):
      highlights = {}
 
