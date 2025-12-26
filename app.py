@@ -88,7 +88,7 @@ if run:
 
     # ---------- ANIMATION LOOP ----------
    import time
-   while len(finished) < len(generators):
+    while len(finished) < len(generators):
      highlights = {}
 
      for _ in range(STEPS_PER_FRAME):
